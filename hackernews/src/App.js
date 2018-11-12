@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Search from './Search';
+import Table from './Table'
 import './App.css';
 
 const list = [
@@ -19,9 +21,6 @@ const list = [
       objectID: 1
     }
 ];
-
-const  isSearched = searchTerm => item =>
-       item.title.toLowerCase().includes(searchTerm.toLowerCase());
   
 /**
  *
@@ -42,12 +41,7 @@ constructor(props) {
       searchTerm: ''
     }
     this.onDismiss = this.onDismiss.bind(this);
-    this.clickMe = this.clickMe.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-  }
-
-  clickMe() {
-    console.log(this);
   }
 
   onSearchChange(event) {
@@ -73,40 +67,22 @@ onDismiss(id) {
    * @memberof App
    */
 render() {
+    const {searchTerm, list } = this.state;
     return (
-      <div className="App">
-        <form>
-          <input type="text" onChange={this.onSearchChange}/>
-        </form>
-       {
-         this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
-           <div key={item.objectID}>
-              <span>
-                <a href={item.url}>{item.title} </a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.num_comments}</span>
-              <span>{item.points}</span>
-              <span>
-                <button onClick={() => this.onDismiss(item.objectID)}
-                type = "button"
-                >
-                  Отбросить
-                </button>
-              </span>
-              <span>
-                <button onClick={this.clickMe} type="button">
-                  Кликни на меня.
-                </button>
-              </span>
-              <span>
-                <button onClick={()=>console.log(item.objectID)} type="button">
-                  Смотри логи .
-                </button>
-              </span>
-           </div>
-          )
-       }
+      <div className="page">
+       <div className="interactions">
+          <Search
+            value = {searchTerm}
+            onChange = {this.onSearchChange}
+          >
+          Поиск
+          </Search>
+       </div>
+      <Table 
+        list = {list}
+        pattern = {searchTerm}
+        onDismiss = {this.onDismiss}
+      />
       </div>
     );
   }
