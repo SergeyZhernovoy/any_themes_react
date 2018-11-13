@@ -2,12 +2,9 @@ import React from 'react';
 import Button from './Button'
 import './App.css';
 
-const  isSearched = searchTerm => item =>
-       item.title.toLowerCase().includes(searchTerm.toLowerCase());
-
-const Table = ({list, pattern, onDismiss}) =>
+const Table = ({list, onDismiss}) =>
     <div className = "table">
-      {list.filter(isSearched(pattern)).map(item =>
+      {list.map(item =>
                   <div key={item.objectID} className="table-row">
                     <span>
                       <a href={item.url}>{item.title} </a>
@@ -16,7 +13,7 @@ const Table = ({list, pattern, onDismiss}) =>
                     <span>{item.num_comments}</span>
                     <span>{item.points}</span>
                     <span>
-                      <Button 
+                      <Button
                       onClick={() => onDismiss(item.objectID)}
                       className="button-inline"
                       >
