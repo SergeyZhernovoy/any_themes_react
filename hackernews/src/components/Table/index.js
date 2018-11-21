@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from './Button'
-import './App.css';
+import Button from '../Button'
+import '../App/index.css';
 
 const Table = ({list, onDismiss}) =>
     <div className = "table">
